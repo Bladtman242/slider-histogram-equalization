@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script id="mustache-templ" type="x-tmpl-mustache">
+<h1>Pollution</h1>
+<p>Filter value: {{maxvalue}}</p>
+<p>Count: {{count}} of {{totaldata}}</p>
+
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.min.js"></script>
+	<script src="data.js"></script>
+	<script>
+	
+	function sliderValue(){
+		slider = document.getElementById("aslider");
+		return slider.value;
+
+	}
+	function renderLinear() {
+		renderLessThan(function(v) {return v});
+	}
+	function renderEqualized() {
+		var f = function(v) {
+			return map[v];
+		};
+		renderLessThan(f);
+	}
+	function renderLessThan(f) {
+		var max = f(sliderValue());
+		var points = [];
+		for (i=0; i<data.length; i++) {
+			if (data[i] > max) {
+				break;
+			}
+			points.push({point: data[i]});
+		}
+
+		var view = {
+			maxvalue: max,
+			count: points.length,
+			totaldata: data.length,
+		};
+
+		var template = document.getElementById("mustache-templ").innerHTML;
+		var target = document.getElementById("contentpane");
+		var rendered = Mustache.render(template, view);
+		target.innerHTML = rendered;
+	}
+	function init() {
+		slider = document.getElementById("aslider");
+
+		//linear
+		//slider.max = data[data.length -1];
+		//slider.min = data[0];
+
+		//equalized
+		slider.max = map.size - 1;
+		slider.min = 0;
+
+
+		sliderUpdate();
+	}
+	function sliderUpdate() {
+		slider = document.getElementById("aslider");
+		sliderValField = document.getElementById("sliderVal");
+		sliderValField.innerHTML = slider.value;
+
+		renderEqualized();
+	}
+	</script>
+	</head>
+	<body onload="init()">
+		<input id="aslider" type="range" style="width:200px;" oninput="sliderUpdate()">
+        <span id="sliderVal"></span>
+		<div id="contentpane"></div>
+	</body>
+</html>
