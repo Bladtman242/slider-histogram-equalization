@@ -1,0 +1,10 @@
+set yrange [0:0.11]
+set ytics 0.05
+set y2range [0:1]
+set y2tics 0.1
+
+set key outside
+
+set style data lines
+plot "oldvalshist" title "original distribution" axes x1y1, "oldvalscumhist" title "original cumulative distribution" axes x1y2, "newvalshist" title "equalized distribution" axes x1y1, "newvalscumhist" title "equalized cumulative distribution" axes x1y2
+pause -1

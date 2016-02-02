@@ -1,7 +1,7 @@
 #!/bin/gawk -f
 BEGIN {
-	max=-inf
-	min=+inf
+	max= -1
+	min=2**16
 }
 
 {

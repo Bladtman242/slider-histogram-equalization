@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<script id="mustache-templ" type="x-tmpl-mustache">
+<p>Filter value: {{maxvalue}}</p>
+<p>Count: {{count}} of {{totaldata}}</p>
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.3/mustache.min.js"></script>
+	<script src="data.js"></script>
+	<script>
+		//var view = {
+		//	maxvalue: max,
+		//	count: points.length,
+		//	totaldata: data.length,
+		//};
+
+		//var template = document.getElementById("mustache-templ").innerHTML;
+		//var target = document.getElementById(slider_type + "-contentpane");
+		//var rendered = Mustache.render(template, view);
+		//target.innerHTML = rendered;
+	function init() {
+		var setMinMax = function(slider_type, min, max) {
+			var slider = document.getElementById(slider_type + "-slider");
+			var mindiv = document.getElementById(slider_type + "-slider-min");
+			var maxdiv = document.getElementById(slider_type + "-slider-max");
+
+			slider.min = min;
+			slider.max = max;
+			mindiv.innerHTML = min;
+			maxdiv.innerHTML = max;
+		}
+
+		linear_slider = document.getElementById("linear-slider");
+
+		//linear
+		lin_max = data[data.length -1].focal_length;
+		lin_min = data[0].focal_length;
+		setMinMax("linear", lin_min, lin_max);
+
+		//equalized
+		eq_max= map.size - 1;
+		eq_min= 0;
+		setMinMax("equalized", eq_min, eq_max);
+	}
+
+	</script>
+	<style>
+		.padded-class{
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+
+		.nopad {
+			padding: 0px !important;
+			margin: 0px !important;
+		}
+	</style>
+	</head>
+
+	<body onload="init()">
+		<h1>Lenshawk lenses by focal length</h1>
+		<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-sm-4">
+			<div class="row padded-class">
+				<h2>Linear slider</h2>
+				<div id="linear-slider-min" style="padding:0;" class="nopad col-lg-2 col-md-2 col-sm-2"></div>
+				<div class="col-lg-8 col-md-8 col-sm-8">
+					<input id="linear-slider" class="nopad" type="range" oninput="sliderUpdate('linear')">
+				</div>
+				<div id="linear-slider-max" class="nopad col-lg-2 col-md-2 col-sm-2"></div>
+			</div>
+			</br>
+			<span></span>
+				<div id="linear-contentpane"></div>
+			</div>
+
+			<div class="col-md-4 col-sm-4">
+			<div class="row padded-class">
+				<h2>Equalized slider</h2>
+				<div id="equalized-slider-min" class="nopad col-lg-2 col-md-2 col-sm-2"></div>
+				<div class="col-lg-8 col-md-8 col-sm-8">
+					<input id="equalized-slider" class="nopad" type="range" oninput="sliderUpdate('equalized')">
+				</div>
+				<div style="padding-left:0;" id="equalized-slider-max" class="nopad col-lg-2 col-md-2 col-sm-2"></div>
+			</div>
+			</br>
+			<span id="sliderVal"></span>
+				<div id="equalized-contentpane"></div>
+			</div>
+		</div>
+
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

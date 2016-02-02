@@ -1,7 +1,7 @@
 #!/bin/gawk -f
 BEGIN {
-	max=-inf
-	min=+inf
+	max=-1
+	min=2^16
 }
 
 {
@@ -13,7 +13,6 @@ BEGIN {
 		min = val
 	}
 	histo[val]++
-	data[NR-1] = val
 }
 END {
 	for (i=min; i<=max;i++) {
@@ -29,7 +28,7 @@ END {
 	sum = 0
 	for (i=min; i<=max;i++) {
 		sum += histo[i]
-		print i, sum * (max-min)
+		print i, sum
 	}
 
 }
