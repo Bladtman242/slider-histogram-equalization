@@ -2,9 +2,15 @@ set yrange [0:0.11]
 set ytics 0.05
 set y2range [0:1]
 set y2tics 0.1
+set ylabel "frequency"
+set y2label "cumulative frequency"
+set label "focal length" left offset 2,-2
 
-set key outside
+set key right under
+set style data linespoints
+plot "oldvalshist" title "original frequency" axes x1y1 pi -1 pt 5 lt 1, \
+     "oldvalscumhist" title "original cumulative frequency" axes x1y2 pi -200 pt 7 lt 2, \
+     "newvalshist" title "equalized frequency" axes x1y1 pi -1 pt 9 lt 3, \
+     "newvalscumhist" title "equalized cumulative frequency" axes x1y2 pi -200 pt 11 lt 4
 
-set style data lines
-plot "oldvalshist" title "original distribution" axes x1y1, "oldvalscumhist" title "original cumulative distribution" axes x1y2, "newvalshist" title "equalized distribution" axes x1y1, "newvalscumhist" title "equalized cumulative distribution" axes x1y2
 pause -1
